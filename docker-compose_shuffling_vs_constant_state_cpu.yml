@@ -1,0 +1,21 @@
+version: '3'
+services:
+  shuffling_vs_constant_state_run1:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py shuffling_vs_constant_state 'shuffling_vs_constant_state/baseline_900jsp_dqn_6x6x6_0i_run_config.yml'"
+    volumes:
+      - .:/source
+
+  shuffling_vs_constant_state_run2:
+      build:
+        context: .
+        dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+      env_file:
+        - wandb_variables.env
+      command: bash -c "python run_experiment.py shuffling_vs_constant_state 'shuffling_vs_constant_state/shuffle_900jsp_dqn_6x6x6_0i_run_config.yml'"
+      volumes:
+        - .:/source

@@ -1,0 +1,21 @@
+version: '3'
+services:
+  test_rl4jsp_run_cpu:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py test_rl4jsp_run_cpu 'test/test_dqn_8x8x8_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+
+  test_l2d_run_cpu:
+      build:
+        context: .
+        dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+      env_file:
+        - wandb_variables.env
+      command: bash -c "python run_experiment.py test_l2d_run_cpu 'test/test_bench_l2d_10x10x10_cpu_4_env_rl4jsp_gen_0i_run_config.yml'"
+      volumes:
+        - .:/source

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  enhanced_baseline_scalability_6x6x6_2_15x15x15_run1:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py enhanced_baseline_scalability_6x6x6_2_15x15x15 'enhanced_baseline_scalability_6x6x6_2_15x15x15/r2_70_makespan_6x6x6_2_15x15x15_900jsp_eps02_shuffle_explr_incent_01_6x6x6_0i_run_config.yml' && python evaluate_on_bigger_jsp.py'"
+    volumes:
+      - .:/source

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  worker_1:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+#    environment:
+#      - WANDB_API_KEY="${WANDB_API_KEY}"
+#      - WANDB_API_KEY="${WANDB_ENTITY}"
+    command: bash -c "python run_experiment_test.py"
+    volumes:
+      - .:/source

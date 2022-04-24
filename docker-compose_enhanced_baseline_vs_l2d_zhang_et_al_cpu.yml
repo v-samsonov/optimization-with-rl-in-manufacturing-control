@@ -1,0 +1,61 @@
+version: '3'
+services:
+  enhanced_baseline_vs_l2d_zhang_et_al_run1:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py enhanced_baseline_vs_l2d_Zhang_et_al 'enhanced_baseline_vs_l2d_Zhang_et_al/bench_l2d_6x6x6_cpu_4_env_rl4jsp_gen_0i_run_config.yml'"
+    volumes:
+      - .:/source
+
+  enhanced_baseline_vs_l2d_zhang_et_al_run2:
+      build:
+        context: .
+        dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+      env_file:
+        - wandb_variables.env
+      command: bash -c "python run_experiment.py enhanced_baseline_vs_l2d_Zhang_et_al 'enhanced_baseline_vs_l2d_Zhang_et_al/bench_l2d_8x8x8_cpu_4_env_rl4jsp_gen_0i_run_config.yml'"
+      volumes:
+        - .:/source
+          
+  enhanced_baseline_vs_l2d_zhang_et_al_run3:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py enhanced_baseline_vs_l2d_Zhang_et_al 'enhanced_baseline_vs_l2d_Zhang_et_al/bench_l2d_10x10x10_cpu_4_env_rl4jsp_gen_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  enhanced_baseline_vs_l2d_zhang_et_al_run4:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py enhanced_baseline_vs_l2d_Zhang_et_al 'enhanced_baseline_vs_l2d_Zhang_et_al/r2_70_makespan_900jsp_eps02_explr_incent_01_6x6x6_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  enhanced_baseline_vs_l2d_zhang_et_al_run5:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py enhanced_baseline_vs_l2d_Zhang_et_al 'enhanced_baseline_vs_l2d_Zhang_et_al/r2_70_makespan_900jsp_eps02_explr_incent_01_8x8x8_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  enhanced_baseline_vs_l2d_zhang_et_al_run6:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py enhanced_baseline_vs_l2d_Zhang_et_al 'enhanced_baseline_vs_l2d_Zhang_et_al/r2_70_makespan_900jsp_eps02_explr_incent_01_10x10x10_0i_run_config.yml'"
+    volumes:
+      - .:/source

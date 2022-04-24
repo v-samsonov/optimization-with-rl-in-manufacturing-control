@@ -1,0 +1,61 @@
+version: '3'
+services:
+  direct_vs_indirect_action_space_mapping_run1:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py direct_vs_indirect_action_space_mapping 'direct_vs_indirect_action_space_mapping/direct_act_space_900jsp_6x6x6_0i_run_config.yml'"
+    volumes:
+      - .:/source
+
+  direct_vs_indirect_action_space_mapping_run2:
+      build:
+        context: .
+        dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+      env_file:
+        - wandb_variables.env
+      command: bash -c "python run_experiment.py direct_vs_indirect_action_space_mapping 'direct_vs_indirect_action_space_mapping/direct_act_space_900jsp_8x8x8_0i_run_config.yml'"
+      volumes:
+        - .:/source
+          
+  direct_vs_indirect_action_space_mapping_run3:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py direct_vs_indirect_action_space_mapping 'direct_vs_indirect_action_space_mapping/direct_act_space_900jsp_10x10x10_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  direct_vs_indirect_action_space_mapping_run4:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py direct_vs_indirect_action_space_mapping 'direct_vs_indirect_action_space_mapping/dqn_6x6x6_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  direct_vs_indirect_action_space_mapping_run5:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py direct_vs_indirect_action_space_mapping 'direct_vs_indirect_action_space_mapping/dqn_8x8x8_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  direct_vs_indirect_action_space_mapping_run6:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py direct_vs_indirect_action_space_mapping 'direct_vs_indirect_action_space_mapping/dqn_10x10x10_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source

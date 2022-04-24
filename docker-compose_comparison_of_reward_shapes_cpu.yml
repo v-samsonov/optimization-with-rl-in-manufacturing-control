@@ -1,0 +1,91 @@
+version: '3'
+services:
+  comparison_of_reward_shapes_run1:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/dense_lb_rew_dqn_6x6x6_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+
+  comparison_of_reward_shapes_run2:
+      build:
+        context: .
+        dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+      env_file:
+        - wandb_variables.env
+      command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/dense_lb_rew_dqn_8x8x8_900jssp_eps02_0i_run_config.yml'"
+      volumes:
+        - .:/source
+          
+  comparison_of_reward_shapes_run3:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/dense_lb_rew_dqn_10x10x10_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  comparison_of_reward_shapes_run4:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/dqn_6x6x6_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  comparison_of_reward_shapes_run5:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/dqn_8x8x8_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  comparison_of_reward_shapes_run6:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/dqn_10x10x10_900jssp_eps02_0i_run_config.yml'"
+    volumes:
+      - .:/source
+        
+  comparison_of_reward_shapes_run7:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/r2_70_makespan_900jsp_eps02_explr_incent_01_6x6x6_0i_run_config.yml'"
+    volumes:
+      - .:/source
+
+  comparison_of_reward_shapes_run8:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/r2_70_makespan_900jsp_eps02_explr_incent_01_8x8x8_0i_run_config.yml'"
+    volumes:
+      - .:/source
+
+  comparison_of_reward_shapes_run9:
+    build:
+      context: .
+      dockerfile: ray_sb23_tf_torch_v2.Dockerfile
+    env_file:
+      - wandb_variables.env
+    command: bash -c "python run_experiment.py comparison_of_reward_shapes 'comparison_of_reward_shapes/r2_70_makespan_900jsp_eps02_explr_incent_01_10x10x10_0i_run_config.yml'"
+    volumes:
+      - .:/source
