@@ -1,0 +1,84 @@
+metadata:
+  creation_date: 'na'
+  experiment_desription: "Validation run of refactored l2d code with original parameters"
+  rl_framework_tag: 'l2d'
+  rl_algorithm_tag: 'ppo'
+  log_folder_prefix: '6x6_l2d'
+  experiment_id: 'bench_l2d_6x6x6_cpu_4_env_rl4jsp_gen_0i'
+  convert_jsp: False
+
+validation:
+  n_checkpoints: 0 # dummy
+  save_freq: 1000 # frequency after how many updates to save and evaluate the agent during training
+  jsp_ind_start_eval: 0
+  jsp_ind_end_eval: 99
+  vizualize_result: True
+  evaluation_seed: 43046
+  jsp_path: 'Data/jsp_instances'
+  jsp_size: '6x6x6'
+
+agent_parameters:
+  training:
+    training_steps: 0 # dummy
+    max_updates: 20000
+    rand_seed_lst: [5231, 4821, 1292] #, [None] if no set rs is required, [None, None, ...] to have multiple runs
+    jsp_ind_start_trn: 990 # dummy
+    jsp_ind_end_trn: 991 # dummy
+    jsp_instance_gen: 'rl4jsp_gen' # 'rl4jsp_gen' or 'l2d_gen'
+    repetitions_per_jsp_task: 1
+    norm_obs: True
+    tensorboard_log_flag: False # (str) the log location for tensorboard (if None, no logging)
+    log_interval: 50
+    env_wrapper: 'DummyVecEnv'
+    envs_number: 1 # (int) The number of timesteps before logging
+    verbose: False
+  policy:
+    feature_extraction: mlp
+    reg_weight: 0.0
+    layers: [64, 64]
+    act_fnc: th.nn.ReLU
+    layer_norm: True
+
+l2d_parmeters:
+  device_parameters:
+    device: 'cpu'
+  network_parameters:
+    num_layers: 3
+    neighbor_pooling_type: 'sum'
+    graph_pool_type: 'average'
+    input_dim: 2
+    hidden_dim: 64
+    num_mlp_layers_feature_extract: 2
+    num_mlp_layers_actor: 2
+    hidden_dim_actor: 32
+    num_mlp_layers_critic: 2
+    hidden_dim_critic: 32
+  ppo_parameters:
+    num_envs: 4
+    lr: 2e-5
+    decayflag: False
+    decay_step_size: 2000
+    decay_ratio: 0.9
+    gamma: 1
+    k_epochs: 1
+    eps_clip: 0.2
+    vloss_coef: 1
+    ploss_coef: 2
+    entloss_coef: 0.01
+
+env_parameters:
+  env_tag: 'jsp_l2d'
+  wrappers_lst:
+    Gym_Monitor: {}
+  n_j: 6
+  n_m: 6
+  rewardscale: 0
+  init_quality_flag: False
+  low: 1
+  high: 11
+  np_seed_train: 200
+  np_seed_validation: 200
+  torch_seed: 600
+  et_normalize_coef: 1000
+  wkr_normalize_coef: 100
+

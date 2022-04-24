@@ -1,0 +1,54 @@
+metadata:
+  creation_date: 'na'
+  experiment_desription: 'runs with 8m steps training  with simpy env on jsps with changing every episode 6x6x6 jsp instances (6 machines, 6 orders, 6 operations)'
+  rl_framework_tag: 'stable_baselines2'
+  rl_algorithm_tag: 'dqn'
+  log_folder_prefix: '6x6x6_simpy_bench'
+  experiment_id: 'r2_70_makespan_6x6x6_2_15x15x15_900jsp_eps02_shuffle_explr_incent_01_6x6x6_0i'
+
+validation:
+  jsp_ind_start_eval: 0
+  jsp_ind_end_eval: 100
+  vizualize_result: True
+  evaluation_seed: 43046
+
+agent_parameters:
+  training:
+    jsp_ind_start_trn: 0 # dummy
+    jsp_ind_end_trn: 100 # dummy
+    envs_number: 1
+  eval:
+    jsp_path: 'Data/jsp_instances'
+    jsp_size: '15x15x15'
+
+env_parameters:
+  env_tag: 'jsp_simpy'
+  obs_manager_tag: 'order_centric_shuffled'
+  discrete_action_space: True
+  max_n_orders: 15
+  max_n_machines: 15
+  wrappers_lst:
+    OperationRelDuration: {}
+    Ranked_Reward:
+      r2_buffer_max_length_per_task: 250
+      r2_percentile: 70
+      too_good_penalty: 0.1
+    Gym_Monitor: {}
+  n_ops_look_ahead: 1
+  max_episode_steps: 500
+  env_obs_dict:
+    orders:
+      processing_machine: False
+      remaining_time_per_operation: False
+      remaining_time_per_order: True
+      next_op_duration_per_order: True
+      next_machine_type_required: True
+      processing_started_at: False
+    machines:
+      op_capabilities_lst: False
+      remaining_processing_time_per_machine: True
+      machine_states: False
+      backlog_per_machine: True
+    rest:
+      total_time: True
+      step_count: False

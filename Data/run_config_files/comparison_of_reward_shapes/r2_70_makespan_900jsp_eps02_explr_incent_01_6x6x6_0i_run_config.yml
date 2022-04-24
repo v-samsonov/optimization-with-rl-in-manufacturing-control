@@ -1,0 +1,91 @@
+metadata:
+  creation_date: 'na'
+  experiment_desription: "multi-instance ranked reward"
+  rl_framework_tag: 'stable_baselines2'
+  rl_algorithm_tag: 'dqn'
+  log_folder_prefix: 'makespan_rew_dqn_6x6x6_0i_run_config'
+  experiment_id: 'r2_70_makespan_900jsp_eps02_explr_incent_01_6x6x6_0i'
+
+validation:
+  n_checkpoints: 40 # frequency of how often to save and evaluate the agent during training. 1 - agent is evaluated only at the end of the episode
+  jsp_ind_start_eval: 0
+  jsp_ind_end_eval: 200
+  vizualize_result: True
+  evaluation_seed: 43046
+
+agent_parameters:
+  training:
+    training_steps: 3e6
+    rand_seed_lst: [5231, 4821, 1292] #, [None] if no set rs is required, [None, None, ...] to have multiple runs, not considered in k8s jobs
+    jsp_ind_start_trn: 100
+    jsp_ind_end_trn: 999
+    repetitions_per_jssp_task: 1
+    random_jsp_iter: True
+    jsp_path: 'Data/jsp_instances'
+    jsp_size: '6x6x6'
+    norm_obs: True
+    tensorboard_log_flag: False # (str) the log location for tensorboard (if None, no logging)
+    log_interval: 10
+    env_wrapper: 'DummyVecEnv'
+    envs_number: 1 # (int) The number of timesteps before logging
+    actions_noise_flag: None
+  policy:
+    feature_extraction: mlp
+    dueling: True
+    layers: [64, 64]
+    act_fnc: tf.nn.relu
+    layer_norm: True
+  exploration:
+    exploration_fraction: 0.2
+    exploration_final_eps: 0.02
+    exploration_initial_eps: 1.0
+  update:
+    train_freq: 1
+    batch_size: 32
+    double_q: True
+    gamma: 0.99
+    learning_rate_val: 5e-4
+    buffer_size: 50000
+    learning_starts: 1000
+    target_network_update_freq: 500
+    prioritized_replay: True
+    prioritized_replay_alpha: 0.6
+    prioritized_replay_beta0: 0.4
+    prioritized_replay_beta_iters: None
+    prioritized_replay_eps: 1e-6
+    param_noise: False
+    n_cpu_tf_sess: 1
+    _init_setup_model: True
+    full_tensorboard_log: False
+
+env_parameters:
+  env_tag: 'jsp_simpy'
+  obs_manager_tag: 'order_centric'
+  discrete_action_space: True
+  max_n_orders: 6
+  max_n_machines: 6
+  wrappers_lst:
+    OperationRelDuration: {}
+    Ranked_Reward:
+      r2_buffer_max_length_per_task: 10
+      r2_percentile: 70
+      too_good_penalty: 0.1
+    Gym_Monitor: {}
+  n_ops_look_ahead: 1
+  max_episode_steps: 500
+  env_obs_dict:
+    orders:
+      processing_machine: False
+      remaining_time_per_operation: False
+      remaining_time_per_order: True
+      next_op_duration_per_order: True
+      next_machine_type_required: True
+      processing_started_at: False
+    machines:
+      op_capabilities_lst: False
+      remaining_processing_time_per_machine: True
+      machine_states: False
+      backlog_per_machine: True
+    rest:
+      total_time: True
+      step_count: False
