@@ -1,0 +1,67 @@
+# Job to run a Ray program in its own pod. Assumes that a cluster is already
+# running (e.g., from './ray-cluster.yaml').
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: bench-l2d-6x6x6-cpu-4-env-rl4jsp-gen-0i-4821-
+  labels:
+    jobgroup: enhanced_baseline_vs_l2d_Zhang_et_al
+spec:
+  ttlSecondsAfterFinished: 3600 # remove finished containers after a while
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never #OnFailure
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+      containers:
+        - name: c
+          image: vladimir249/rl:py37_sb23_torch140_tf114_cf_v1
+          imagePullPolicy: IfNotPresent #IfNotPresent, Always
+          command: [ "/bin/bash", "-c", "--" ]
+          args:
+            - cd tmp && mkdir repo_code && cd repo_code;
+              apt update;
+              apt-get install apt-transport-https ca-certificates -y;
+              update-ca-certificates;
+              pip install wandb -U;
+              git clone --single-branch --branch main https://github.com/v-samsonov/optimization-with-rl-in-manufacturing-control.git;
+              cd optimization-with-rl-in-manufacturing-control;
+              python RL_Code/scripts/run_experiment_k8s.py evaluation_l2d_Zhang_et_al/bench_l2d_6x6x6_cpu_4_env_rl4jsp_gen_0i_run_config.yml 4821 enhanced_baseline_vs_l2d_Zhang_et_al rl4jsp_runs;
+          ports:
+            - containerPort: 12345 # Ray internal communication.
+            - containerPort: 12346 # Ray internal communication.
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+          env:
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: WANDB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wandb
+                  key: API_KEY
+            - name: WANDB_ENTITY
+              valueFrom:
+                secretKeyRef:
+                  name: wandb
+                  key: ENTITY
+            - name: WANDB_DOCKER
+              value: vladimir249/rl:py37_sb23_torch140_tf114_cf_v1
+            - name: DATE_STAMP
+              value: 2022.04.23_13.33.51
+            - name: PYTHONHASHSEED
+              value: "0"
+          resources:
+            requests:
+              cpu: 10
+              memory: 15000Mi
+            limits:
+              cpu: 10
+              memory: 15000Mi
+
